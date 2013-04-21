@@ -1,0 +1,195 @@
+<html>
+  <head>
+    <title>Sainte-Laguë/Schepers-Verfahren</title>
+    <meta content="">
+    <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
+    <style>
+    
+    body {
+      font-family: sans-serif;
+      background-color: #e0e0e0;
+    }
+    
+    h1 {
+      background-color: #ffff00;
+      border-radius: 15px;
+      padding: 0.3em;
+      padding-left: 0.5em;
+    }
+    
+    .hsg {
+	float:left; 
+	border-width: 1px; 
+	border-style:solid; 
+	border-color: blue;
+	padding: 1em;
+	margin: 0.2em;
+	background-color: #ffffcc;
+	border-radius: 10px;
+    }
+    #warning {
+      color: red;
+      margin: 0.2em;
+    }
+    
+    </style>
+    
+    <script src="./jquery-2.0.0.js"></script>   
+  </head>
+  
+  <body>
+  <div id=header>
+	<h1 >Sainte-Laguë/Schepers-Verfahren</h1>
+  </div>
+  
+  <div id=wrapper style="float:left; border-radius: 20px; border-width: 2px; border-style:dotted; border-color: #aaaaaa; padding: 1em;">
+  
+  <div id=buttons>
+	<input type="button" id="b1" name="calculate" value="Sitze berechnen">
+	<input type="button" id="b2" name="addgroup" value="HSG hinzufügen">
+	<input type="button" id="b3" name="deleteall" value="alle löschen">
+	<input type="button" id="b4" name="spexample" value="SP-Wahl Bonn 2013">
+  </div>
+  
+  <div id="sumOfVotes" style="font-size: 33; font-weight: heavy;">Gesamtstimmzahl: -</div>  
+  <div id="divisor" style="font-size: 33; font-weight: heavy;">Divisor: -</div>
+  
+  <div id=hsglist style="float:left; border-radius: 5px; background-color: #aaaaaa; padding: 0.5em;">
+
+  </div>
+  
+  </div>
+  
+  <div style="clear:both;"></div>
+  
+  <div id=footer style="font-size: 8pt; color:#eeeeee; background: #111111; border-radius: 5px">
+	<p style="padding: 0.5em; text-align: right;">Umsetzung: Sven Zemanek (web1[ät]hszemi.de), 2013</p>
+  </div>  
+  
+  <script type="text/JavaScript">
+	function setRemovalFunctions(){
+		var delbuttons = document.getElementsByClassName("del");
+		for (var i = 0; i < delbuttons.length; i++){
+			delbuttons[i].onclick = function () {
+				$(this).parent().remove();
+			}
+		}
+	}
+	
+	function addHSG(name, votes) { 
+		$("#hsglist").append("<div class=hsg>\nName:<input class=\"inputname\" type=\"text\" size=\"50\" maxlength=\"100\" value=\"" + name + "\"> | <input type=\"button\" class=\"del\" name=\"delete\" value=\"X\" align=\"right\"><br />\nStimmen: <input class=\"inputvotes\" type=\"text\" size=\"10\" maxlength=\"10\" value=\"" + votes + "\"><br />\n<hr />\nSitze: <span class=\"seats\">-</span><br /></div>");
+		
+		setRemovalFunctions();
+	}
+	
+	
+	function addEmptyHSG() { 
+		addHSG("", 0);
+	}
+	
+	addEmptyHSG();
+  
+  
+	document.getElementById("b1").onclick = function () { 
+			var numberOfSeats = 43;
+			var names = document.getElementsByClassName("inputname"); 
+			var votes = document.getElementsByClassName("inputvotes"); 
+			var seatoutput = document.getElementsByClassName("seats"); 
+			var seats = new Array(names.length)
+			
+			if (names.length < 1) {
+				alert("Keine Werte vorhanden!");
+				return;
+			}
+			
+			var sumOfVotes = 0
+			for (var i = 0; i < votes.length; i++){
+				sumOfVotes += parseInt(votes[i].value, 10);
+			}
+			
+			var divisor = 1.0;
+			var sumOfAllSeats = numberOfSeats + 1;
+			while ( sumOfAllSeats > numberOfSeats){
+				sumOfAllSeats = 0;
+				divisor += 10;
+				for (var i = 0; i < votes.length; i++){
+					seats[i] = Math.round(votes[i].value / divisor);
+					sumOfAllSeats += seats[i];
+				}
+			}
+			
+			while ( sumOfAllSeats < numberOfSeats){
+				sumOfAllSeats = 0;
+				divisor -= 1;
+				for (var i = 0; i < votes.length; i++){
+					seats[i] = Math.round(votes[i].value / divisor);
+					sumOfAllSeats += seats[i];
+				}
+
+			}
+			
+			while ( sumOfAllSeats > numberOfSeats){
+				sumOfAllSeats = 0;
+				divisor += 0.1;
+				for (var i = 0; i < votes.length; i++){
+					seats[i] = Math.round(votes[i].value / divisor);
+					sumOfAllSeats += seats[i];
+				}
+			}
+			
+			while ( sumOfAllSeats < numberOfSeats && divisor > 0.002){
+				sumOfAllSeats = 0;
+				divisor -= 0.001;
+				for (var i = 0; i < votes.length; i++){
+					seats[i] = Math.round(votes[i].value / divisor);
+					sumOfAllSeats += seats[i];
+				}
+			}
+			
+			var warningdiv = $('#warning');
+			if(warningdiv != null){
+				warningdiv.remove();
+			}
+			
+			if(sumOfAllSeats != numberOfSeats){
+				$('#divisor').after("<div id=\"warning\">Teilergleichheit bei zwei oder mehr Gruppen! " + sumOfAllSeats + " Sitze zugewiesen!</div>");
+			}
+			
+			/*for (var i = 0; i < names.length; i++){
+				alert(names[i].value + " " + votes[i].value + " " + seats[i]);
+			}*/
+			
+			document.getElementById("sumOfVotes").firstChild.data = "Gesamtstimmzahl: " + sumOfVotes;
+			document.getElementById("divisor").firstChild.data = "Divisor: " + divisor;
+			
+			for (var i = 0; i < seatoutput.length; i++){
+				seatoutput[i].firstChild.data = seats[i];
+			}
+			
+		};
+		
+		
+		document.getElementById("b2").onclick = function () {
+			addEmptyHSG();
+		}
+		
+		document.getElementById("b3").onclick = function () {
+			$('#hsglist').empty();
+		}
+		
+		document.getElementById("b4").onclick = function () {
+			$('#hsglist').empty();
+			
+			addHSG("Grüne Hochschulgruppe-campus:grün", 1426);
+			addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1066);
+			addHSG("Juso-Hochschulgruppe", 980);
+			addHSG("LUST - Liste undogmatischer StudentInnen", 250);
+			addHSG("PIRATEN-HOCHSCHULGRUPPE BONN", 156);
+			addHSG("LHG - Liberale Hochschulgruppe", 294);
+		}
+		
+  </script>
+	
+  
+  </body>
+</html>
