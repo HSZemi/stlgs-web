@@ -13,6 +13,7 @@
     h1 {
       background-color: #ffff00;
       border-radius: 15px;
+      box-shadow:0px 0px 8px #666;
       padding: 0.3em;
       padding-left: 0.5em;
     }
@@ -27,9 +28,34 @@
 	background-color: #ffffcc;
 	border-radius: 10px;
     }
+    
+    #wrapper {
+	float:left; 
+	border-radius: 20px; 
+	border-width: 2px; 
+	border-style:dotted; 
+	border-color: #aaaaaa; 
+	padding: 1em;
+    }
+    
+    #hsglist {
+	float:left; 
+	border-radius: 5px; 
+	background-color: #aaaaaa; 
+	padding: 0.5em;
+    }
+    
     #warning {
       color: red;
       margin: 0.2em;
+    }
+    
+    #footer {
+	font-size: 8pt; 
+	color:#eeeeee; 
+	background: #111111; 
+	border-radius: 5px; 
+	box-shadow:0px 0px 4px #666;
     }
     
     </style>
@@ -42,7 +68,7 @@
 	<h1 >Sainte-Laguë/Schepers-Verfahren</h1>
   </div>
   
-  <div id=wrapper style="float:left; border-radius: 20px; border-width: 2px; border-style:dotted; border-color: #aaaaaa; padding: 1em;">
+  <div id=wrapper>
   
   <div id=buttons>
 	<input type="button" id="b1" name="calculate" value="Sitze berechnen">
@@ -54,7 +80,7 @@
   <div id="sumOfVotes" style="font-size: 33; font-weight: heavy;">Gesamtstimmzahl: -</div>  
   <div id="divisor" style="font-size: 33; font-weight: heavy;">Divisor: -</div>
   
-  <div id=hsglist style="float:left; border-radius: 5px; background-color: #aaaaaa; padding: 0.5em;">
+  <div id=hsglist>
 
   </div>
   
@@ -62,9 +88,14 @@
   
   <div style="clear:both;"></div>
   
-  <div id=footer style="font-size: 8pt; color:#eeeeee; background: #111111; border-radius: 5px">
-	<p style="padding: 0.5em; text-align: right;">Umsetzung: Sven Zemanek (web1[ät]hszemi.de), 2013. <a href="https://github.com/HSZemi/stlgs-web">Projektseite auf GitHub</a></p>
+  <div id=footer>
+	<p style="padding: 0.5em; text-align: right;">
+		Umsetzung: Sven Zemanek (web1[ät]hszemi.de), 2013. 
+		<a href="https://github.com/HSZemi/stlgs-web">Projektseite auf GitHub</a>
+	</p>
   </div>  
+  
+  <!-- JavaScript-Kram -->
   
   <script type="text/JavaScript">
 	function setRemovalFunctions(){
@@ -86,6 +117,19 @@
 	
 	function addEmptyHSG() { 
 		addHSG("", 0);
+	}
+	
+	function trim(value){
+		string = value.toFixed(3).toString();
+		while(string[string.length - 1] == "0"){
+			string = string.slice(0,string.length - 1);
+		}
+		
+		if(string[string.length - 1] == "."){
+			string = string.slice(0,string.length - 1);
+		}
+		
+		return string;
 	}
 	
 	addEmptyHSG();
@@ -161,7 +205,7 @@
 			}*/
 			
 			document.getElementById("sumOfVotes").firstChild.data = "Gesamtstimmzahl: " + sumOfVotes;
-			document.getElementById("divisor").firstChild.data = "Divisor: " + divisor;
+			document.getElementById("divisor").firstChild.data = "Divisor: " + trim(divisor);
 			
 			for (var i = 0; i < seatoutput.length; i++){
 				seatoutput[i].firstChild.data = seats[i];
