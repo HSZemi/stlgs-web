@@ -73,8 +73,9 @@
   <div id=buttons>
 	<input type="button" id="b1" name="calculate" value="Sitze berechnen">
 	<input type="button" id="b2" name="addgroup" value="HSG hinzufügen">
-	<input type="button" id="b3" name="deleteall" value="alle löschen">
+	<input type="button" id="b3" name="deleteall" value="alle löschen"> | 
 	<input type="button" id="b4" name="spexample" value="SP-Wahl Bonn 2013">
+	<input type="button" id="b5" name="spexample2" value="SP-Wahl Bonn 2012">
   </div>
   
   <div id="sumOfVotes" style="font-size: 33; font-weight: heavy;">Gesamtstimmzahl: -</div>  
@@ -232,6 +233,20 @@
 			addHSG("PIRATEN-HOCHSCHULGRUPPE BONN", 156);
 			addHSG("LHG - Liberale Hochschulgruppe", 294);
 		}
+
+		document.getElementById("b5").onclick = function () {
+                        $('#hsglist').empty();
+                        
+                        addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1187);
+                        addHSG("Grüne Hochschulgruppe (ghg) - campus:grün", 1286);
+                        addHSG("Juso-Hochschulgruppe", 796);
+                        addHSG("Liste undogmatischer StudentInnen (LUST)", 290);
+                        addHSG("Piraten-Hochschulgruppe Bonn", 238);
+                        addHSG("Universitäres Bündnis für Innovation und Gerechtigkeit (UBIG)", 149);
+			addHSG("Re(h) - Partei", 103);
+			addHSG("Die Demokraten", 105);
+                }
+
 		
   </script>
 	
