@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Sainte-Laguë/Schepers-Verfahren</title>
+    <title>D'Hondt-Verfahren</title>
     <meta content="">
     <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
     <style>
@@ -11,13 +11,14 @@
     }
     
     h1 {
-      background-color: #ffff00;
+      background-color: #ee0000;
+      color: #ffffff;
       border-radius: 15px;
       box-shadow:0px 0px 8px #666;
       padding: 0.3em;
       padding-left: 0.5em;
     }
-
+    
      a:link {
 	color:#ffffff;
     }
@@ -41,7 +42,7 @@
 	border-color: blue;
 	padding: 1em;
 	margin: 0.2em;
-	background-color: #ffffcc;
+	background-color: #ffdddd;
 	border-radius: 10px;
     }
     
@@ -82,9 +83,9 @@
   <body>
   <div id=header>
 	<div style="padding: 0.5em; float: right;">
-		<a href="dhondt.html" style="color: black; font-weight: bold;">zu d'Hondt wechseln</a>
+		<a href="index.html" style="font-weight: bold;">zu Sainte-Laguë/Schepers wechseln</a>
 	</div>
-	<h1 >Sainte-Laguë/Schepers-Verfahren</h1>
+	<h1 >D'Hondt-Verfahren</h1>
   </div>
   
   <div id=wrapper>
@@ -180,7 +181,7 @@
 				sumOfAllSeats = 0;
 				divisor += 10;
 				for (var i = 0; i < votes.length; i++){
-					seats[i] = Math.round(votes[i].value / divisor);
+					seats[i] = Math.floor(votes[i].value / divisor);
 					sumOfAllSeats += seats[i];
 				}
 			}
@@ -189,7 +190,7 @@
 				sumOfAllSeats = 0;
 				divisor -= 1;
 				for (var i = 0; i < votes.length; i++){
-					seats[i] = Math.round(votes[i].value / divisor);
+					seats[i] = Math.floor(votes[i].value / divisor);
 					sumOfAllSeats += seats[i];
 				}
 
@@ -199,7 +200,7 @@
 				sumOfAllSeats = 0;
 				divisor += 0.1;
 				for (var i = 0; i < votes.length; i++){
-					seats[i] = Math.round(votes[i].value / divisor);
+					seats[i] = Math.floor(votes[i].value / divisor);
 					sumOfAllSeats += seats[i];
 				}
 			}
