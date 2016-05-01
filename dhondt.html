@@ -74,6 +74,22 @@
 	border-radius: 5px; 
 	box-shadow:0px 0px 4px #666;
     }
+    #table {
+	margin-top: 1em;
+	border-collapse: collapse;
+    }
+    
+    #table, #table th, #table td {
+	border: 1px solid gray;
+    }
+    
+    td.seat{
+	background-color: yellow;
+    }
+    
+    td.danger{
+	background-color: red;
+    }
     
     </style>
     
@@ -95,8 +111,11 @@
 	<input type="button" id="b1" name="calculate" value="Sitze berechnen">
 	<input type="button" id="b2" name="addgroup" value="HSG hinzufügen">
 	<input type="button" id="b3" name="deleteall" value="alle löschen"> | 
-	<input type="button" id="b4" name="spexample" value="SP-Wahl Bonn 2013">
-	<input type="button" id="b5" name="spexample2" value="SP-Wahl Bonn 2012">
+	<input type="button" id="b8" name="spexample2016" value="SP-Wahl Bonn 2016">
+	<input type="button" id="b4" name="spexample2015" value="SP-Wahl Bonn 2015">
+	<input type="button" id="b5" name="spexample2014" value="SP-Wahl Bonn 2014">
+	<input type="button" id="b6" name="spexample2013" value="SP-Wahl Bonn 2013">
+	<input type="button" id="b7" name="spexample2012" value="SP-Wahl Bonn 2012">
   </div>
   
   <div id="sumOfVotes" style="font-size: 33; font-weight: heavy;">Gesamtstimmzahl: -</div>  
@@ -109,6 +128,9 @@
   </div>
   
   <div style="clear:both;"></div>
+  
+  <table id="table">
+  </table>
   
   <div id=footer>
 	<p style="padding: 0.5em; text-align: right;">
@@ -177,40 +199,57 @@
 			
 			var divisor = 1.0;
 			var sumOfAllSeats = numberOfSeats + 1;
+			var maxSeats = 0;
 			while ( sumOfAllSeats > numberOfSeats){
 				sumOfAllSeats = 0;
+				maxSeats = 0;
 				divisor += 10;
 				for (var i = 0; i < votes.length; i++){
 					seats[i] = Math.floor(votes[i].value / divisor);
 					sumOfAllSeats += seats[i];
+					if(seats[i] > maxSeats){
+						maxSeats = seats[i];
+					}
 				}
 			}
 			
 			while ( sumOfAllSeats < numberOfSeats){
 				sumOfAllSeats = 0;
+				maxSeats = 0;
 				divisor -= 1;
 				for (var i = 0; i < votes.length; i++){
 					seats[i] = Math.floor(votes[i].value / divisor);
 					sumOfAllSeats += seats[i];
+					if(seats[i] > maxSeats){
+						maxSeats = seats[i];
+					}
 				}
 
 			}
 			
 			while ( sumOfAllSeats > numberOfSeats){
 				sumOfAllSeats = 0;
+				maxSeats = 0;
 				divisor += 0.1;
 				for (var i = 0; i < votes.length; i++){
 					seats[i] = Math.floor(votes[i].value / divisor);
 					sumOfAllSeats += seats[i];
+					if(seats[i] > maxSeats){
+						maxSeats = seats[i];
+					}
 				}
 			}
 			
 			while ( sumOfAllSeats < numberOfSeats && divisor > 0.002){
 				sumOfAllSeats = 0;
+				maxSeats = 0;
 				divisor -= 0.001;
 				for (var i = 0; i < votes.length; i++){
-					seats[i] = Math.round(votes[i].value / divisor);
+					seats[i] = Math.floor(votes[i].value / divisor);
 					sumOfAllSeats += seats[i];
+					if(seats[i] > maxSeats){
+						maxSeats = seats[i];
+					}
 				}
 			}
 			
@@ -230,8 +269,53 @@
 			document.getElementById("sumOfVotes").firstChild.data = "Gesamtstimmzahl: " + sumOfVotes;
 			document.getElementById("divisor").firstChild.data = "Divisor: " + trim(divisor);
 			
+			$('#table').empty();
+			
+			var divisors = Array();
+			
+			for(j=1; j<maxSeats+2; j = j+1){
+				divisors.push(j);
+			}
+			
 			for (var i = 0; i < seatoutput.length; i++){
 				seatoutput[i].firstChild.data = seats[i];
+			}
+			
+			var tablehead = "<thead><tr><th>Liste</th><th>Stimmen</th>";
+			for (div of divisors){
+				tablehead += "<th>"+div+"</th>";
+			}
+			tablehead += "</tr></thead><tbody id='tbody'></tbody>";
+			var table = $('#table').append(tablehead);
+			
+			
+			var danger_value = 99999999;
+			if(sumOfAllSeats != numberOfSeats){
+				for(i=0; i<votes.length;i++){
+					for(div of divisors){
+						var current_value = votes[i].value / div;
+						if(current_value < danger_value && current_value >= (divisor-0.5)){
+							danger_value = current_value;
+						}
+					}
+				}
+			}
+			
+			for(i=0; i<names.length;i++){
+				var row = "<tr><td>"+names[i].value+"</td><td>"+votes[i].value+"</td>";
+				for(div of divisors){
+				var current_value = votes[i].value / div;
+				var c ="";
+				if(current_value >= divisor){
+					c = "seat";
+					if(parseFloat(current_value) == parseFloat(danger_value)){
+						c = "danger";
+					}
+				}
+					row += "<td class='"+c+"'>"+trim(current_value)+"</td>";
+				}
+				row += "</tr>"
+				$('#tbody').append(row);
 			}
 			
 		};
@@ -248,6 +332,27 @@
 		document.getElementById("b4").onclick = function () {
 			$('#hsglist').empty();
 			
+			addHSG("Juso-HSG", 1684);
+			addHSG("RCDS & Unabhängige", 1077);
+			addHSG("Liberale Hochschulgruppe an der Uni Bonn", 562);
+			addHSG("Liste undogmatischer StudentInnen (LUST)", 602);
+			addHSG("Piraten-Hochschulgruppe Bonn", 301);
+		}
+		
+		document.getElementById("b5").onclick = function () {
+			$('#hsglist').empty();
+			
+			addHSG("Grüne Hochschulgruppe - campus:grün", 1214);
+			addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1025);
+			addHSG("Juso-Hochschulgruppe", 1056);
+			addHSG("Liberale Hochschulgruppe an der Uni Bonn (LHG)", 430);
+			addHSG("Liste Undogmatischer StudentInnen (LUST)", 253);
+			addHSG("Piraten-Hochschulgruppe Bonn", 177);
+		}
+		
+		document.getElementById("b6").onclick = function () {
+			$('#hsglist').empty();
+			
 			addHSG("Grüne Hochschulgruppe-campus:grün", 1426);
 			addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1066);
 			addHSG("Juso-Hochschulgruppe", 980);
@@ -256,7 +361,7 @@
 			addHSG("LHG - Liberale Hochschulgruppe", 294);
 		}
 
-		document.getElementById("b5").onclick = function () {
+		document.getElementById("b7").onclick = function () {
                         $('#hsglist').empty();
                         
                         addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1187);
@@ -267,6 +372,18 @@
                         addHSG("Universitäres Bündnis für Innovation und Gerechtigkeit (UBIG)", 149);
 			addHSG("Re(h) - Partei", 103);
 			addHSG("Die Demokraten", 105);
+                }
+		document.getElementById("b8").onclick = function () {
+                        $('#hsglist').empty();
+                        
+                        addHSG("Juso-HSG", 1333);
+                        addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1423);
+                        addHSG("Liste undogmatischer StudentInnen (LUST)", 447);
+                        addHSG("Liberale Hochschulgruppe Bonn", 627);
+                        addHSG("Piraten-Hochschulgruppe Bonn", 161);
+			addHSG("Die LISTE", 407);
+                        addHSG("Grüne Hochschulgruppe", 1053);
+			addHSG("KULT", 356);
                 }
 
 		
