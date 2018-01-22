@@ -91,10 +91,7 @@
     }
     
     </style>
-    
-    <script src="./jquery-2.0.0.js"></script>   
   </head>
-  
   <body>
   <div id=header>
 	<div style="padding: 0.5em; float: right;">
@@ -110,11 +107,13 @@
 	<input type="button" id="b1" name="calculate" value="Sitze berechnen">
 	<input type="button" id="b2" name="addgroup" value="HSG hinzufügen">
 	<input type="button" id="b3" name="deleteall" value="alle löschen"> |  
-	<input type="button" id="b8" name="spexample2016" value="SP-Wahl Bonn 2016">
-	<input type="button" id="b4" name="spexample2015" value="SP-Wahl Bonn 2015">
-	<input type="button" id="b5" name="spexample2014" value="SP-Wahl Bonn 2014">
-	<input type="button" id="b6" name="spexample2013" value="SP-Wahl Bonn 2013">
-	<input type="button" id="b7" name="spexample2012" value="SP-Wahl Bonn 2012">
+	<input type="button" id="spexample2018" name="spexample2018" value="SP-Wahl Bonn 2018">
+	<input type="button" id="spexample2017" name="spexample2017" value="SP-Wahl Bonn 2017">
+	<input type="button" id="spexample2016" name="spexample2016" value="SP-Wahl Bonn 2016">
+	<input type="button" id="spexample2015" name="spexample2015" value="SP-Wahl Bonn 2015">
+	<input type="button" id="spexample2014" name="spexample2014" value="SP-Wahl Bonn 2014">
+	<input type="button" id="spexample2013" name="spexample2013" value="SP-Wahl Bonn 2013">
+	<input type="button" id="spexample2012" name="spexample2012" value="SP-Wahl Bonn 2012">
   </div>
   
   <div id="sumOfVotes" style="font-size: 33; font-weight: heavy;">Gesamtstimmzahl: -</div>  
@@ -141,6 +140,7 @@
   
   <!-- JavaScript-Kram -->
   
+  <script src="./jquery-3.3.1.slim.min.js"></script>   
   <script type="text/JavaScript">
 	function setRemovalFunctions(){
 		var delbuttons = document.getElementsByClassName("del");
@@ -324,24 +324,24 @@
 		
 		document.getElementById("b2").onclick = function () {
 			addEmptyHSG();
-		}
+		};
 		
 		document.getElementById("b3").onclick = function () {
-			$('#hsglist').empty();
-		}
+			document.getElementById('hsglist').innerHTML = "";
+		};
 		
-		document.getElementById("b4").onclick = function () {
-			$('#hsglist').empty();
+		document.getElementById("spexample2012").onclick = function () {
+			document.getElementById('hsglist').innerHTML = "";
 			
 			addHSG("Juso-HSG", 1684);
 			addHSG("RCDS & Unabhängige", 1077);
 			addHSG("Liberale Hochschulgruppe an der Uni Bonn", 562);
 			addHSG("Liste undogmatischer StudentInnen (LUST)", 602);
 			addHSG("Piraten-Hochschulgruppe Bonn", 301);
-		}
+		};
 		
-		document.getElementById("b5").onclick = function () {
-			$('#hsglist').empty();
+		document.getElementById("spexample2013").onclick = function () {
+			document.getElementById('hsglist').innerHTML = "";
 			
 			addHSG("Grüne Hochschulgruppe - campus:grün", 1214);
 			addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1025);
@@ -349,10 +349,10 @@
 			addHSG("Liberale Hochschulgruppe an der Uni Bonn (LHG)", 430);
 			addHSG("Liste Undogmatischer StudentInnen (LUST)", 253);
 			addHSG("Piraten-Hochschulgruppe Bonn", 177);
-		}
+		};
 		
-		document.getElementById("b6").onclick = function () {
-			$('#hsglist').empty();
+		document.getElementById("spexample2014").onclick = function () {
+			document.getElementById('hsglist').innerHTML = "";
 			
 			addHSG("Grüne Hochschulgruppe-campus:grün", 1426);
 			addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1066);
@@ -360,34 +360,59 @@
 			addHSG("LUST - Liste undogmatischer StudentInnen", 250);
 			addHSG("PIRATEN-HOCHSCHULGRUPPE BONN", 156);
 			addHSG("LHG - Liberale Hochschulgruppe", 294);
-		}
+		};
 
-		document.getElementById("b7").onclick = function () {
-                        $('#hsglist').empty();
+		document.getElementById("spexample2015").onclick = function () {
+			document.getElementById('hsglist').innerHTML = "";
                         
-                        addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1187);
-                        addHSG("Grüne Hochschulgruppe (ghg) - campus:grün", 1286);
-                        addHSG("Juso-Hochschulgruppe", 796);
-                        addHSG("Liste undogmatischer StudentInnen (LUST)", 290);
-                        addHSG("Piraten-Hochschulgruppe Bonn", 238);
-                        addHSG("Universitäres Bündnis für Innovation und Gerechtigkeit (UBIG)", 149);
+			addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1187);
+			addHSG("Grüne Hochschulgruppe (ghg) - campus:grün", 1286);
+			addHSG("Juso-Hochschulgruppe", 796);
+			addHSG("Liste undogmatischer StudentInnen (LUST)", 290);
+			addHSG("Piraten-Hochschulgruppe Bonn", 238);
+			addHSG("Universitäres Bündnis für Innovation und Gerechtigkeit (UBIG)", 149);
 			addHSG("Re(h) - Partei", 103);
 			addHSG("Die Demokraten", 105);
-                }
-		document.getElementById("b8").onclick = function () {
-                        $('#hsglist').empty();
+                };
+                
+		document.getElementById("spexample2016").onclick = function () {
+			document.getElementById('hsglist').innerHTML = "";
                         
-                        addHSG("Juso-HSG", 1333);
-                        addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1423);
-                        addHSG("Liste undogmatischer StudentInnen (LUST)", 447);
-                        addHSG("Liberale Hochschulgruppe Bonn", 627);
-                        addHSG("Piraten-Hochschulgruppe Bonn", 161);
+			addHSG("Juso-HSG", 1333);
+			addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1423);
+			addHSG("Liste undogmatischer StudentInnen (LUST)", 447);
+			addHSG("Liberale Hochschulgruppe Bonn", 627);
+			addHSG("Piraten-Hochschulgruppe Bonn", 161);
 			addHSG("Die LISTE", 407);
-                        addHSG("Grüne Hochschulgruppe", 1053);
+			addHSG("Grüne Hochschulgruppe", 1053);
 			addHSG("KULT", 356);
-                }
+                };
+                
+		document.getElementById("spexample2017").onclick = function () {
+			document.getElementById('hsglist').innerHTML = "";
+                        
+			addHSG("Juso-HSG", 1333);
+			addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 1423);
+			addHSG("Liste undogmatischer StudentInnen (LUST)", 447);
+			addHSG("Liberale Hochschulgruppe Bonn", 627);
+			addHSG("Piraten-Hochschulgruppe Bonn", 161);
+			addHSG("Die LISTE", 407);
+			addHSG("Grüne Hochschulgruppe", 1053);
+			addHSG("KULT", 356);
+                };
+                
+		document.getElementById("spexample2018").onclick = function () {
+			document.getElementById('hsglist').innerHTML = "";
+                        
+			addHSG("Juso-HSG", 1381);
+			addHSG("Ring Christlich-Demokratischer Studenten (RCDS) & Unabhängige", 851);
+			addHSG("Liberale Hochschulgruppe Bonn", 772);
+			addHSG("Liste Undogmatischer StudentInnen (LUST)", 299);
+			addHSG("Die Linke.SDS Bonn", 346);
+			addHSG("Grüne Hochschulgruppe", 1208);
+			addHSG("IYSSE-Hochschulgruppe", 30);
+                };
 
-		
   </script>
 	
   
