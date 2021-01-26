@@ -108,6 +108,7 @@
 	<input type="button" id="b1" name="calculate" value="Sitze berechnen">
 	<input type="button" id="b2" name="addgroup" value="HSG hinzufügen">
 	<input type="button" id="b3" name="deleteall" value="alle löschen"> | 
+	<input type="button" id="spexample2020" name="spexample2020" value="SP-Wahl Bonn 2020">
 	<input type="button" id="spexample2019" name="spexample2019" value="SP-Wahl Bonn 2019">
 	<input type="button" id="spexample2018" name="spexample2018" value="SP-Wahl Bonn 2018">
 	<input type="button" id="spexample2017" name="spexample2017" value="SP-Wahl Bonn 2017">
@@ -424,6 +425,21 @@
 			addHSG("Liste undogmatischer StudentInnen (LUST)", 338);
                 };
 
+		document.getElementById("spexample2020").onclick = function () {
+			document.getElementById('hsglist').innerHTML = "";
+                        
+			addHSG("GHG", 1497);
+			addHSG("JUSOS", 1102);
+			addHSG("LHG", 568);
+			addHSG("RCDS", 706);
+			addHSG("LUST", 337);
+			addHSG("SDS", 364);
+			addHSG("BILLA", 27);
+			addHSG("DANCV", 75);
+			addHSG("LP", 598);
+			addHSG("VOLT", 332);
+                };
+                
 		
   </script>
 	
