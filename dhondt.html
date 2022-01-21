@@ -108,6 +108,7 @@
 	<input type="button" id="b1" name="calculate" value="Sitze berechnen">
 	<input type="button" id="b2" name="addgroup" value="HSG hinzufügen">
 	<input type="button" id="b3" name="deleteall" value="alle löschen"> | 
+	<input type="button" id="spexample2022" name="spexample2022" value="SP-Wahl Bonn 2022">
 	<input type="button" id="spexample2021" name="spexample2021" value="SP-Wahl Bonn 2021">
 	<input type="button" id="spexample2020" name="spexample2020" value="SP-Wahl Bonn 2020">
 	<input type="button" id="spexample2019" name="spexample2019" value="SP-Wahl Bonn 2019">
@@ -136,7 +137,7 @@
   
   <div id=footer>
 	<p style="padding: 0.5em; text-align: right;">
-		Umsetzung: Sven Zemanek (web1[ät]hszemi.de), 2013. 
+		Umsetzung: Sven Zemanek (web1[ät]hszemi.de), 2013-2022. 
 		<a href="https://github.com/HSZemi/stlgs-web">Projektseite auf GitHub</a>
 	</p>
   </div>  
@@ -452,6 +453,18 @@
 			addHSG("SDS", 312);
 			addHSG("LUST", 410);
 			addHSG("VOLT", 431);
+                };
+                
+		document.getElementById("spexample2022").onclick = function () {
+			document.getElementById('hsglist').innerHTML = "";
+                        
+			addHSG("GHG", 1692);
+			addHSG("JUSOS", 787);
+			addHSG("RCDS", 578);
+			addHSG("LP", 504);
+			addHSG("LUST", 354);
+			addHSG("LHG", 361);
+			addHSG("SDS", 256);
                 };
 		
   </script>
