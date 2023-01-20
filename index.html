@@ -107,6 +107,7 @@
 	<input type="button" id="b1" name="calculate" value="Sitze berechnen">
 	<input type="button" id="b2" name="addgroup" value="HSG hinzufügen">
 	<input type="button" id="b3" name="deleteall" value="alle löschen"> |  
+	<input type="button" id="spexample2023" name="spexample2023" value="SP-Wahl Bonn 2023">
 	<input type="button" id="spexample2022" name="spexample2022" value="SP-Wahl Bonn 2022">
 	<input type="button" id="spexample2021" name="spexample2021" value="SP-Wahl Bonn 2021">
 	<input type="button" id="spexample2020" name="spexample2020" value="SP-Wahl Bonn 2020">
@@ -466,6 +467,20 @@
 			addHSG("LUST", 354);
 			addHSG("LHG", 361);
 			addHSG("SDS", 256);
+                };
+                
+		document.getElementById("spexample2023").onclick = function () {
+			document.getElementById('hsglist').innerHTML = "";
+                        
+			addHSG("GHG", 962);
+			addHSG("JUSOS", 639);
+			addHSG("RCDS", 531);
+			addHSG("LP", 557);
+			addHSG("LHG", 262);
+			addHSG("LUST", 277);
+			addHSG("SDS", 103);
+			addHSG("DZENT", 68);
+			addHSG("LIBO", 23);
                 };
   </script>
 	
