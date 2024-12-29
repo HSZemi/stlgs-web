@@ -1,0 +1,14 @@
+table.table td {
+    text-align: right;
+}
+
+table.table td:nth-child(1) {
+    text-align: left;
+}
+
+
+.dice svg {
+    width: 1.2em;
+    height: 1.2em;
+    fill: #666;
+}
