@@ -14,11 +14,14 @@ export interface ResultTableRow extends ListDataWithTotalVotes {
 
 export interface StlgsListResult extends ResultTableRow {
   seats: number | undefined
+  deputySeats: number | undefined
 }
 
 export interface StlgsFullResult extends StlgsListResult {
   listSeats: number | undefined
   peopleSeats: number | undefined
+  deputyListSeats: number | undefined
+  deputyPeopleSeats: number | undefined
   needsLot: boolean
   seatsDetails: StlgsListResult[]
 }

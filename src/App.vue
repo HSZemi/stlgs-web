@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, type ComputedRef, type Ref, ref, watch} from "vue";
+import {computed, type Ref, ref, watch} from "vue";
 import type {ListData} from "@/interfaces.ts";
 import FullTable from "@/components/FullTable.vue";
 import {HISTORICAL_DATA} from "@/data.ts";
@@ -35,7 +35,7 @@ const historicalDataKeys = computed(() => Object.keys(HISTORICAL_DATA).reverse()
 
 const listDataWithTotalVotes = computed(() => addTotalVotes(state.value))
 const table = computed(() => stlgsTable(listDataWithTotalVotes.value, numberOfSeats.value))
-const withSeats = computed(() => stlgsSeats(table.value, numberOfSeats.value))
+const withSeats = computed(() => stlgsSeats(table.value, numberOfSeats.value, undefined))
 const full = computed(() => stlgsSeatDistribution(withSeats.value))
 
 </script>
@@ -97,15 +97,20 @@ const full = computed(() => stlgsSeatDistribution(withSeats.value))
             <td><input type="number" min="0" v-model="list.peopleVotes"/></td>
             <td><input type="number" min="0" v-model="list.listVotes"/></td>
             <td>{{ full[i].totalVotes === undefined ? '?' : full[i].totalVotes }}</td>
-            <td>{{ full[i].seats === undefined ? '?' : full[i].seats }}</td>
+            <td>
+              {{ full[i].seats === undefined ? '?' : full[i].seats }}
+              <small>+{{ full[i].deputySeats === undefined ? '?' : full[i].deputySeats }}</small>
+            </td>
             <td>
               {{ full[i].peopleSeats === undefined ? '?' : full[i].peopleSeats }}
+              <small>+{{ full[i].deputyPeopleSeats === undefined ? '?' : full[i].deputyPeopleSeats }}</small>
               <template v-if="full[i].needsLot">
                 <span class="dice" title="Losentscheid notwendig"><IconDice/></span>
               </template>
             </td>
             <td>
               {{ full[i].listSeats === undefined ? '?' : full[i].listSeats }}
+              <small>+{{ full[i].deputyListSeats === undefined ? '?' : full[i].deputyListSeats }}</small>
               <template v-if="full[i].needsLot">
                 <span class="dice" title="Losentscheid notwendig"><IconDice/></span>
               </template>
@@ -121,7 +126,7 @@ const full = computed(() => stlgsSeatDistribution(withSeats.value))
           </tr>
           <tr v-if="showDetails.includes(i)">
             <td colspan="9">
-              <FullTable :lists="full[i].seatsDetails" :numberOfSeats="full[i].seats||0"/>
+              <FullTable :lists="full[i].seatsDetails" :numberOfSeats="full[i].seats||0" :showDeputySeats="true"/>
             </td>
           </tr>
         </template>
@@ -132,7 +137,7 @@ const full = computed(() => stlgsSeatDistribution(withSeats.value))
     <hr>
 
     <div class="container">
-      <FullTable :lists="full" :numberOfSeats="numberOfSeats"/>
+      <FullTable :lists="full" :numberOfSeats="numberOfSeats" :showDeputySeats="false"/>
     </div>
     <hr>
 

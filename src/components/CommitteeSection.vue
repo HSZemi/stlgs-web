@@ -12,7 +12,7 @@ const props = defineProps<{
 
 
 const table = computed(() => stlgsTable(props.lists, props.numberOfSeats))
-const withSeats = computed(() => stlgsSeats(table.value, props.numberOfSeats))
+const withSeats = computed(() => stlgsSeats(table.value, props.numberOfSeats, undefined))
 
 const calculatedNumberOfSeats = computed(() => withSeats.value.map(l => l.seats || 0).reduce((accumulator, currentValue) => accumulator + currentValue, 0))
 
@@ -47,7 +47,7 @@ const calculatedNumberOfSeats = computed(() => withSeats.value.map(l => l.seats 
 
     <details>
     <summary>Tabelle</summary>
-      <FullTable :lists="withSeats" :numberOfSeats="numberOfSeats"/>
+      <FullTable :lists="withSeats" :numberOfSeats="numberOfSeats" :showDeputySeats="false"/>
     </details>
   </div>
 </template>

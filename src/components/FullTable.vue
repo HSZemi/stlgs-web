@@ -6,6 +6,7 @@ import IconDice from "@/components/icons/IconDice.vue";
 const props = defineProps<{
   lists: StlgsListResult[]
   numberOfSeats: number
+  showDeputySeats: boolean
 }>()
 
 
@@ -14,7 +15,19 @@ const limit = computed(() => {
   return allValues[props.numberOfSeats - 1]
 })
 
-const maxSeats = computed(() => Math.max(...props.lists.map(l => l.seats || 0)))
+const totalSeatsCount = computed(() => {
+  if (!props.showDeputySeats || props.numberOfSeats < 1) {
+    return props.numberOfSeats;
+  }
+  return props.numberOfSeats + Math.max(2, Math.ceil(props.numberOfSeats / 2))
+});
+
+const deputyLimit = computed(() => {
+  const allValues = props.lists.flatMap((row: StlgsListResult) => row.values).sort((a, b) => b - a)
+  return allValues[totalSeatsCount.value - 1]
+})
+
+const maxSeats = computed(() => Math.max(...props.lists.map(l => (l.seats || 0) + (props.showDeputySeats ? (l.deputySeats || 0) : 0))))
 const displayRange = computed(() => {
   const values = []
   for (let i = 0; i <= maxSeats.value; i++) {
@@ -38,7 +51,7 @@ const calculatedNumberOfSeats = computed(() => props.lists.map(l => l.seats || 0
       Es wurden <strong>{{calculatedNumberOfSeats}}</strong> Sitze zugeteilt statt <strong>{{numberOfSeats}}</strong>.
     </div>
   </template>
-  <p>Schwellwert: <strong>{{ limit }}</strong></p>
+  <p>Schwellwert: <strong>{{ limit }}</strong> <small>({{ deputyLimit }})</small></p>
   <table class="table">
     <thead>
     <tr>
@@ -50,7 +63,7 @@ const calculatedNumberOfSeats = computed(() => props.lists.map(l => l.seats || 0
     <tr v-for="list in lists" :key="list.name">
       <th>{{ list.name }}</th>
       <template v-for="(value, i) in list.values.slice(0, maxSeats+1)" :key="i">
-        <td :class="value < limit ? '' : 'has-background-success'">
+        <td :class="value < limit ? (value < deputyLimit ? '' : 'has-background-warning') : 'has-background-success'">
           <abbr :title="value.toString()">{{ value.toFixed(1) }}</abbr>
         </td>
       </template>
