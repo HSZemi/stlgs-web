@@ -8,7 +8,7 @@ import IconDice from "@/components/icons/IconDice.vue";
 import CommitteeSection from "@/components/CommitteeSection.vue";
 
 const numberOfSeats = ref(43);
-const state = ref<ListData[]>(JSON.parse(JSON.stringify(HISTORICAL_DATA[2024])))
+const state = ref<ListData[]>(JSON.parse(JSON.stringify(HISTORICAL_DATA[2025])))
 const showDetails: Ref<number[]> = ref([])
 
 const load = (value: ListData[]) => state.value = JSON.parse(JSON.stringify(value))

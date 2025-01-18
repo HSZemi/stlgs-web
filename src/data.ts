@@ -137,12 +137,12 @@ export const HISTORICAL_DATA: { [key: string]: ListData[] } = {
   ],
 
   '2025': [
-    {name: "LP", listVotes: undefined, peopleVotes: undefined},
-    {name: "JLGL", listVotes: undefined, peopleVotes: undefined},
-    {name: "RCDS", listVotes: undefined, peopleVotes: undefined},
-    {name: "LUST", listVotes: undefined, peopleVotes: undefined},
-    {name: "LHG", listVotes: undefined, peopleVotes: undefined},
-    {name: "SDS", listVotes: undefined, peopleVotes: undefined},
+    {name: "LP", listVotes: 515, peopleVotes: 494},
+    {name: "JLGL", listVotes: 580, peopleVotes: 752},
+    {name: "RCDS", listVotes: 203, peopleVotes: 279},
+    {name: "LUST", listVotes: 109, peopleVotes: 90},
+    {name: "LHG", listVotes: 85, peopleVotes: 110},
+    {name: "SDS", listVotes: 273, peopleVotes: 270},
   ],
 
 }
